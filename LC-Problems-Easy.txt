@@ -45,3 +45,51 @@ public boolean containsDuplicate(int[] nums) {
     }
 
 
+
+
+------------------------------------------------
+
+53. Maximum SubArray
+
+Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+
+A subarray is a contiguous part of an array.
+
+ex. Input: nums = [5,4,-1,7,8]
+O(N^2) - 2 passses
+
+  public int maxSubArray(int[] nums) {
+    int max = Integer.MIN_VALUE;
+    
+    for(int i=0;i<nums.length;i++){
+        int currMax=0;
+        //start loop at i as we want to find contigious!
+        //loops through all contiguous starting from 0
+        for(int j=i;j<nums.length;j++){
+            currMax+=nums[j];
+            max = Math.max(currMax,max);
+        }
+    }
+    return max;  
+ }
+
+** We can use Kadanes dyanmic programming algorithm to solve in O(N) - 1 pass
+
+ public int maxSubArray(int[] nums) {
+        
+    int startMax = Integer.MIN_VALUE;
+    int maxSoFar =0;
+    //Kadanes Algorithm // O(n) -> singular pass
+    for(int i=0;i<nums.length;i++){
+        maxSoFar+=nums[i];
+        if(startMax<maxSoFar){
+            startMax = maxSoFar;
+        }
+        //if negative reset as it doesn't contribute to a larger sum
+        if(maxSoFar<0){
+            maxSoFar=0;
+        }
+    }
+    return startMax;
+    
+    }
